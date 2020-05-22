@@ -8,7 +8,7 @@ The main starting point to achieve this "Old Pokemon nostalgia" is the **look an
 
 ### Display Resolution and limitations
 The original Gameboy display resolution was 160px(width) per 144px(tall), and the game was mostly composed of 20 * 18 Grid or 8px per 8px Tiles.
-As the console doesn't have a "frame buffer", you can't specify the color of each pixel on screen individually. Because of that, all the on-screen images are built by assembling loads of "tiles", i.e. 8x8 pixels squares. This is applicable for both background and sprites:
+As the Gameboy console doesn't have a "frame buffer", you can't specify the color of each pixel on screen individually. Because of that, all the on-screen images are built by assembling loads of "tiles", i.e. 8x8 pixels squares. This is applicable for both background and sprites:
 
 - The Sprites can work using 4 8x8px tiles, measuring 16x16px, but also the Gameboy could make a 8x16 display mode for the sprites (meaning, 2 tiles of 8x16px).
 - 8px per 8px repetitive tiles for floors.
@@ -29,8 +29,7 @@ There are actually two possible Sprites "color modes" : one with the Black and n
 - Mostly all objects/sprites desings are going to be multiples of 8. So you could create a "table" of 24x32 pixels, or a bed of 32*16 pixels. Characters sprites are mostly 16X16 pixels, and this Engine implementation will be mostly set around that values (Meaning that objects, colliders and so will be related to this measure). 
 
 Sources:
-- [Sprite Analysis: Top-Down RPG Pixel Art (Pokémon)](git remote add origin git@github.com:emilianofant/PkmBoy.git
-git push -u origin master)
+- [Sprite Analysis: Top-Down RPG Pixel Art Pokémon](https://www.youtube.com/watch?v=gwF0L55kIgg)
 - [Making a Game Boy game in 2017](https://www.gamasutra.com/blogs/DoctorLudos/20171207/311143/Making_a_Game_Boy_game_in_2017_A_quotSheep_It_Upquot_PostMortem_part_12.php)
 - [https://itch.io/jam/gbjam-5/topic/41384/the-actual-gb-limits](https://itch.io/jam/gbjam-5/topic/41384/the-actual-gb-limits)
 ## Engine Specs
