@@ -63,6 +63,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	// @todo: Move all texture library related to specific method
 	assets->AddTexture("house", "assets/backgrounds/bkg_00.png");
 	assets->AddTexture("player", "assets/sprites/char_01.png");
+	assets->AddTexture("map_objects", "assets/sprites/objs_00.png");
 
 	map = new Map("house", 2, 8);
 	map->LoadMap("assets/indoor/house.map", 22, 20);
@@ -71,11 +72,13 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	int centeredPlayerPositionX = (width/2);
 	int centeredPlayerPositionY = (height/2) - 16;
 	assets->CreatePlayer(Vector2D(centeredPlayerPositionX, centeredPlayerPositionY), "player");
+	assets->CreateMapObject(Vector2D(96,96), "plant");
 }
 
 auto& tiles(manager.getGroup(Game::groupMap));
 auto& players(manager.getGroup(Game::groupPlayers));
 auto& colliders(manager.getGroup(Game::groupColliders));
+auto& mapObjects(manager.getGroup(Game::groupMapObjects));
 
 void Game::handleEvents()
 {
@@ -112,6 +115,18 @@ void Game::update()
 		}
 	}
 
+	for (auto& o : mapObjects)
+	{
+		SDL_Rect oCol = o->getComponent<ColliderComponent>().collider;
+
+		if (Collision::AABB(oCol, playersCol))
+		{
+			// if True, then there is collision
+			// mainPlayer->getComponent<TransformComponent>().position = playerPos;
+			mainPlayer->getComponent<TransformComponent>().resetDestinationPosition();
+		}
+	}
+
 	camera.x = mainPlayer->getComponent<TransformComponent>().position.x - (_windowWidthRes / 4) + 16;
 	camera.y = mainPlayer->getComponent<TransformComponent>().position.y - (_windowHeightRes / 4) + 16;
 }
@@ -133,6 +148,11 @@ void Game::render()
 	for (auto& p : players)
 	{
 		p->draw();
+	}
+
+	for (auto& o : mapObjects)
+	{
+		o->draw();
 	}
 
 	SDL_RenderPresent(renderer);

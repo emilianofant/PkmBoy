@@ -13,7 +13,6 @@ Map::Map(std::string tID, int ms, int ts) : texID(tID), mapScale(ms), tileSize(t
 
 Map::~Map()
 {
-
 }
 
 void Map::LoadMap(std::string path, int sizeX, int sizeY)
@@ -24,9 +23,9 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY)
 
     int srcX, srcY;
 
-    for(int y = 0; y < sizeY; y++)
+    for (int y = 0; y < sizeY; y++)
     {
-        for(int x = 0; x < sizeX; x++)
+        for (int x = 0; x < sizeX; x++)
         {
             mapFile.get(c);
             srcY = atoi(&c) * tileSize;
@@ -47,21 +46,20 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY)
             if (c == '1')
             {
                 //collision
-                auto& tcol(manager.addEntity());
+                auto &tcol(manager.addEntity());
                 tcol.addComponent<ColliderComponent>("wall", x * scaledSize, y * scaledSize, scaledSize);
                 tcol.addGroup(Game::groupColliders);
             }
             mapFile.ignore();
         }
     }
-    
+
     mapFile.close();
 }
 
 void Map::AddTile(int srcX, int srcY, int xpos, int ypos)
 {
-    auto& tile(manager.addEntity());
-	tile.addComponent<TileComponent>(srcX, srcY, xpos, ypos, tileSize, mapScale, texID);
-	tile.addGroup(Game::groupMap);
+    auto &tile(manager.addEntity());
+    tile.addComponent<TileComponent>(srcX, srcY, xpos, ypos, tileSize, mapScale, texID);
+    tile.addGroup(Game::groupMap);
 }
-

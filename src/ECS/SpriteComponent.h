@@ -31,6 +31,7 @@ private:
      * @brief Flag that defines is the Sprite is animated or not. 
      */
     bool animated = false;
+    bool mapObject = false;
     /**
      * @brief Amount of frames that the Sprite's animation contains.
      *        Default: one frame.
@@ -61,16 +62,6 @@ public:
      */
     SpriteComponent() = default;
 
-    /**
-     * @brief Construct a new Sprite Component object.
-     * 
-     * @param path String route to the sprite file.
-     */
-    SpriteComponent(const char* path)
-    {
-        setTex(path);
-    }
-    
     /**
      * @brief Construct a new Sprite Component object with animated sprite.
      * 
@@ -103,6 +94,18 @@ public:
         setTex(id);
     }
 
+    SpriteComponent(std::string id, int srcX, int srcY, int sprWidth, int sprHeight)
+    {
+        mapObject = true;
+
+        srcRect.x = srcX;
+        srcRect.y = srcY;
+        srcRect.w = sprWidth;
+        srcRect.h = sprHeight;
+        
+        setTex(id);
+    }
+
     /**
      * @brief Destroy the Sprite Component object
      */
@@ -126,7 +129,10 @@ public:
     {
         transform = &entity->getComponent<TransformComponent>();
 
-        srcRect.x = srcRect.y = 0;
+        if(!mapObject) {
+            srcRect.x = srcRect.y = 0;
+        }
+
         srcRect.w = transform->width;
         srcRect.h = transform->height;
     }

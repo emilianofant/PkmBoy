@@ -45,9 +45,10 @@ public:
 	 */
 	enum groupLabels : std::size_t
 	{
-		groupMap, 			// All Entities related to a Game's Map.
-		groupPlayers,		// All Players type of Entities.
-		groupColliders,	// All Colliders actionable Entities.
+		groupMap, 			 // All Entities related to a Game's Map.
+		groupPlayers,		 // All Players type of Entities.
+		groupMapObjects, // All Map objects type of Entities.
+		groupColliders,	 // All Colliders actionable Entities.
 	};
 
 	/**

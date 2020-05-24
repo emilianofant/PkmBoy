@@ -37,6 +37,14 @@ public:
    * @param id   String name to tag the Asset. 
    */
   void CreatePlayer(Vector2D pos, std::string id);
+  
+  /**
+   * @brief Create a Map object.
+   * 
+   * @param pos  Vector with the Object's position.
+   * @param id   String name to tag the Asset. 
+   */
+  void CreateMapObject(Vector2D pos, std::string id);
 
   // ************
   // Texture Management

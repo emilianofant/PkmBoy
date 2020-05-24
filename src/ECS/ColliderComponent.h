@@ -54,7 +54,8 @@ public:
     }
 
     /**
-     * @brief Construct a new Collider Component object with a specific position.
+     * @brief Construct a new Collider Component object with a specific position
+     *        and a square position (used in tiles).
      * 
      * @param t     String name identifier.
      * @param xpos  -x axis position of the Entity in the Game.
@@ -67,6 +68,25 @@ public:
         collider.x = xpos + 1;
         collider.y = ypos + 1;
         collider.h = collider.w = size - 1;
+    }
+
+    /**
+     * @brief Construct a new Collider Component object with a specific position
+     *        and a custom width/height. 
+     * 
+     * @param t           String name identifier.
+     * @param xpos        -x axis position of the Entity in the Game.
+     * @param ypos        -y axis position of the Entity in the Game.
+     * @param widthSize   Texture/Entity width size in pixels.
+     * @param heightSize  Texture/Entity height size in pixels.
+     */
+    ColliderComponent(std::string t, int xpos, int ypos, int widthSize, int heightSize)
+    {
+        tag = t;
+        collider.x = xpos + 1;
+        collider.y = ypos + 1;
+        collider.h = heightSize - 1;
+        collider.w = widthSize - 1;
     }
 
     void init() override
@@ -85,7 +105,7 @@ public:
 
     void update() override
     {
-        if(tag != "wall")
+        if(tag == "player")
         {
             collider.x = static_cast<int>(transform->position.x) + 1;
             collider.y = static_cast<int>(transform->position.y) + 1;
