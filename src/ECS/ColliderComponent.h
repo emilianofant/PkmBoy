@@ -80,7 +80,7 @@ public:
      * @param widthSize   Texture/Entity width size in pixels.
      * @param heightSize  Texture/Entity height size in pixels.
      */
-    ColliderComponent(std::string t, int xpos, int ypos, int widthSize, int heightSize)
+    ColliderComponent(std::string t, int xpos, int ypos, int heightSize, int widthSize)
     {
         tag = t;
         collider.x = xpos + 1;
@@ -98,14 +98,21 @@ public:
         transform = &entity->getComponent<TransformComponent>();
 
         // @todo: check of we can remove texture for the collition tile.
-        tex = TextureManager::LoadTexture("assets/_coltex.png");
+        //  this works just for validationg where the colliders are being positioned.
+        tex = TextureManager::LoadTexture("assets/coltex.png");
         srcR = { 0, 0, 8, 8 };
-        destR = { collider.x, collider.y, collider.w, collider.h };
+
+        if(tag == "wall")
+        {
+            destR = { collider.x, collider.y, collider.w, collider.h};
+        } else {
+            destR = { collider.x, collider.y, collider.w * 2, collider.h * 2};
+        }
     }
 
     void update() override
     {
-        if(tag == "player")
+        if(tag != "wall")
         {
             collider.x = static_cast<int>(transform->position.x) + 1;
             collider.y = static_cast<int>(transform->position.y) + 1;
@@ -113,8 +120,8 @@ public:
             collider.h = (transform->height * transform->scale) - 1;
         }
 
-        destR.x = collider.x; // - Game::camera.x
-        destR.y = collider.y; // - Game::camera.y
+        destR.x = collider.x - Game::camera.x; 
+        destR.y = collider.y - Game::camera.y; 
     }
 
     void draw () override
