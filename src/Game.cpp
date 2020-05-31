@@ -63,7 +63,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	// @todo: Move all texture library related to specific method
 	assets->AddTexture("house", "assets/backgrounds/bkg_00.png");
 	assets->AddTexture("player", "assets/sprites/char_01.png");
-	assets->AddTexture("map_objects", "assets/sprites/objs_00.png");
+	assets->AddTexture("map_objects", "assets/sprites/mobjs_00.png");
 
 	map = new Map("house", 2, 8);
 	map->LoadMap("assets/indoor/house.map", 22, 20);
