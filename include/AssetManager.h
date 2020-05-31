@@ -6,6 +6,7 @@
 #include "Vector2D.h"
 #include "../src/ECS/ECS.h"
 #include "SDL2/SDL_ttf.h"
+#include "Resources.h"
 
 /**
  * @brief This class is in charge of managing different types of
@@ -15,7 +16,8 @@
 class AssetManager
 {
 public:
-  /**
+
+    /**
    * @brief Construct a new Asset Manager object.
    * 
    * @param man  Game's Manager reference.
@@ -42,9 +44,10 @@ public:
    * @brief Create a Map object.
    * 
    * @param pos  Vector with the Object's position.
-   * @param id   String name to tag the Asset. 
+   * @param spr  Sprite type id. 
+   * @param sc   Texture scaling factor. 
    */
-  void CreateMapObject(Vector2D pos, std::string id);
+  void CreateMapObject(Vector2D pos, spriteType_t spr, int sc);
 
   // ************
   // Texture Management

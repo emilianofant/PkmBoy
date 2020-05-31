@@ -93,7 +93,16 @@ public:
         
         setTex(id);
     }
-
+    
+    /**
+     * @brief Construct a new Sprite Component object for a Map's object.
+     * 
+     * @param id         Texture id from which to get the texture.
+     * @param srcX       -x axis coordinate to get the texture.
+     * @param srcY       -y axis coordinate to get the texture.
+     * @param sprWidth   Sprite's texture amount of pixels width.
+     * @param sprHeight  Sprite's texture amount of pixels height.
+     */
     SpriteComponent(std::string id, int srcX, int srcY, int sprWidth, int sprHeight)
     {
         mapObject = true;

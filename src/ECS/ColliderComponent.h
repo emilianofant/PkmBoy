@@ -99,7 +99,7 @@ public:
 
         // @todo: check of we can remove texture for the collition tile.
         //  this works just for validationg where the colliders are being positioned.
-        tex = TextureManager::LoadTexture("assets/coltex.png");
+        tex = TextureManager::LoadTexture("assets/_coltex.png");
         srcR = { 0, 0, 8, 8 };
 
         if(tag == "wall")

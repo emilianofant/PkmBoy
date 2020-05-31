@@ -18,12 +18,17 @@ void AssetManager::CreatePlayer(Vector2D pos, std::string id)
 	player.addGroup(Game::groupPlayers);
 }
 
-void AssetManager::CreateMapObject(Vector2D pos, std::string id)
+void AssetManager::CreateMapObject(Vector2D pos, spriteType_t spr, int sc)
 {
+  int sprXpos = spritesInfo[spr].xPos * 16; 
+  int sprYpos = spritesInfo[spr].yPos * 16; 
+  int sprH = spritesInfo[spr].height;
+  int sprW = spritesInfo[spr].width;
+
   auto& mapObject(manager->addEntity());
-  mapObject.addComponent<TransformComponent>(pos.x, pos.y, 32, 16, 2);
-	mapObject.addComponent<SpriteComponent>("map_objects", 0, 32, 16, 32);
-	mapObject.addComponent<ColliderComponent>(id, pos.x, pos.y, 32, 16);
+  mapObject.addComponent<TransformComponent>(pos.x, pos.y, sprH, sprW, sc);
+	mapObject.addComponent<SpriteComponent>("map_objects", sprXpos, sprYpos, sprH, sprW);
+	mapObject.addComponent<ColliderComponent>("map_objects", pos.x, pos.y, sprH, sprW);
 	mapObject.addGroup(Game::groupMapObjects);
 }
 

@@ -68,11 +68,14 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	map = new Map("house", 2, 8);
 	map->LoadMap("assets/indoor/house.map", 22, 20);
 
-	// ecs Implementation
+	// ECS Implementation
 	int centeredPlayerPositionX = (width/2);
 	int centeredPlayerPositionY = (height/2) - 16;
+	// Player creation
 	assets->CreatePlayer(Vector2D(centeredPlayerPositionX, centeredPlayerPositionY), "player");
-	assets->CreateMapObject(Vector2D(96,96), "plant");
+	// Map objects creation
+	assets->CreateMapObject(Vector2D(96,96), MOBJ_PLANT, scale);
+	assets->CreateMapObject(Vector2D(128,96), MOBJ_LIBRARY, scale);
 }
 
 auto& tiles(manager.getGroup(Game::groupMap));
