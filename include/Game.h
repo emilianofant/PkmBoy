@@ -49,6 +49,7 @@ public:
 		groupPlayers,		 // All Players type of Entities.
 		groupMapObjects, // All Map objects type of Entities.
 		groupColliders,	 // All Colliders actionable Entities.
+		groupTriggers,	 // All Triggers actionable Entities.
 	};
 
 	/**
@@ -108,4 +109,9 @@ private:
 	 * @brief Height resolution for the Game's window.
 	 */
 	int _windowHeightRes;
+	/**
+	 * @brief The local reference to a game Rendere 
+	 * 				scaling factor.
+	 */
+	float _scale = 1;
 };

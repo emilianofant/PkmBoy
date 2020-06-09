@@ -14,3 +14,6 @@ bin/*
 
 #ignore vscode configs
 .vscode
+
+resources/Char_anim.aseprite 
+Roadmap.md

@@ -1,3 +1,4 @@
+#include "AssetManager.h"
 #include "TextureManager.h"
 #include "ECS/Components.h"
 
@@ -32,6 +33,13 @@ void AssetManager::CreateMapObject(Vector2D pos, spriteType_t spr, int sc)
 	mapObject.addGroup(Game::groupMapObjects);
 }
 
+void AssetManager::CreateTrigger(Vector2D pos, int sc)
+{
+  auto& trigger(manager->addEntity());
+  trigger.addComponent<TransformComponent>(pos.x, pos.y, sc);
+	trigger.addComponent<ColliderComponent>("trigger", pos.x, pos.y, 16 * sc);
+	trigger.addGroup(Game::groupTriggers);
+}
 void AssetManager::AddTexture(std::string id, const char* path)
 {
   textures.emplace(id, TextureManager::LoadTexture(path));

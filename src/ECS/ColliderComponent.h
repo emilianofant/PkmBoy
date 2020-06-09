@@ -67,7 +67,7 @@ public:
         tag = t;
         collider.x = xpos + 1;
         collider.y = ypos + 1;
-        collider.h = collider.w = size - 1;
+        collider.h = collider.w = size - 2;
     }
 
     /**

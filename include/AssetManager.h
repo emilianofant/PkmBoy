@@ -49,6 +49,13 @@ public:
    */
   void CreateMapObject(Vector2D pos, spriteType_t spr, int sc);
 
+/**
+ * @brief Create a Trigger object
+ * 
+ * @param pos Vector to set the entity's position.
+ * @param sc  Texture scaling factor.
+ */
+  void CreateTrigger(Vector2D pos, int sc);
   // ************
   // Texture Management
   // ************

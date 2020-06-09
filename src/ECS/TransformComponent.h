@@ -173,5 +173,11 @@ public:
         position = _latestSafePosition;
         _destPosition = position;
     }
+
+    void setNewPosition(Vector2D newPos)
+    {
+        position = newPos;
+        _destPosition = position;
+    }
 };
 

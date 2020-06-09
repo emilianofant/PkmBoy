@@ -1,5 +1,7 @@
 #pragma once
+
 #include <string>
+#include "Resources.h"
 
 /**
  * @brief This class is responsible for reading a .map file, which contains a 
@@ -40,9 +42,18 @@ public:
      * @param path  The map's txt file path.
      * @param sizeX The map's x size / amount of tiles column.
      * @param sizeY The map's y size / amount of tiles rows.
+     * 
+     * @todo: make private (?)
      */
     void LoadMap(std::string path, int sizeX, int sizeY);
 
+    /**
+     * @brief Function to set a new map from the data it gets from a mapDataStruct_t
+     *        element.
+     * 
+     * @param mapData 
+     */
+    void SetMap(mapData_t mapData);
 private:
     /**
      * @brief Local reference to the Map's Texture id from where to get

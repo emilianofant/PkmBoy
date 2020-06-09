@@ -4,6 +4,7 @@
 #include "ECS/Components.h"
 #include "Vector2D.h"
 #include "Collision.h"
+#include "Resources.h"
 #include "AssetManager.h"
 
 #include <sstream>
@@ -27,9 +28,10 @@ Game::~Game()
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen, float scale = 1)
 {
+	_scale = scale;
 	int flags = 0;
-	_windowWidthRes = width*(int)scale;
-	_windowHeightRes = height*(int)scale;
+	_windowWidthRes = width*(int)_scale;
+	_windowHeightRes = height*(int)_scale;
 
 	if(fullscreen)
 	{
@@ -49,7 +51,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		renderer = SDL_CreateRenderer(window, -1, 0);
 		if(renderer) {
 			SDL_SetRenderDrawColor(renderer, 15, 26, 15, 255);
-			SDL_RenderSetScale(renderer, scale, scale);
+			SDL_RenderSetScale(renderer, _scale, _scale);
 
 			std::cout << "Render Created" << std::endl;
 		}
@@ -62,26 +64,24 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	// Adding texture to the "Texture library"
 	// @todo: Move all texture library related to specific method
 	assets->AddTexture("house", "assets/backgrounds/bkg_00.png");
+	assets->AddTexture("outdoor", "assets/map/outdoor.png");
 	assets->AddTexture("player", "assets/sprites/char_01.png");
 	assets->AddTexture("map_objects", "assets/sprites/mobjs_00.png");
 
-	map = new Map("house", 2, 8);
-	map->LoadMap("assets/indoor/house.map", 22, 20);
+	// @todo: move SetMap to the constructor (?)
+	map = new Map("outdoor", 2, 16);
+	map->SetMap(MAP_OUTDOOR);
 
-	// ECS Implementation
-	int centeredPlayerPositionX = (width/2);
-	int centeredPlayerPositionY = (height/2) - 16;
 	// Player creation
-	assets->CreatePlayer(Vector2D(centeredPlayerPositionX, centeredPlayerPositionY), "player");
-	// Map objects creation
-	assets->CreateMapObject(Vector2D(96,96), MOBJ_PLANT, scale);
-	assets->CreateMapObject(Vector2D(128,96), MOBJ_LIBRARY, scale);
+	assets->CreatePlayer(Vector2D(288, 320), "player");
+	assets->CreateTrigger(Vector2D(288, 288), _scale);
 }
 
 auto& tiles(manager.getGroup(Game::groupMap));
 auto& players(manager.getGroup(Game::groupPlayers));
 auto& colliders(manager.getGroup(Game::groupColliders));
 auto& mapObjects(manager.getGroup(Game::groupMapObjects));
+auto& triggers(manager.getGroup(Game::groupTriggers));
 
 void Game::handleEvents()
 {
@@ -112,8 +112,6 @@ void Game::update()
 
 		if (Collision::AABB(cCol, playersCol))
 		{
-			// if True, then there is collision
-			// mainPlayer->getComponent<TransformComponent>().position = playerPos;
 			mainPlayer->getComponent<TransformComponent>().resetDestinationPosition();
 		}
 	}
@@ -124,9 +122,39 @@ void Game::update()
 
 		if (Collision::AABB(oCol, playersCol))
 		{
-			// if True, then there is collision
-			// mainPlayer->getComponent<TransformComponent>().position = playerPos;
 			mainPlayer->getComponent<TransformComponent>().resetDestinationPosition();
+		}
+	}
+
+	for (auto& t : triggers)
+	{
+		SDL_Rect oCol = t->getComponent<ColliderComponent>().collider;
+
+		if (Collision::AABB(oCol, playersCol))
+		{
+			for (auto& ti : tiles) {
+				ti->destroy();
+			}
+			// Remove colliders from previous Map.
+			for (auto& c : colliders) {
+				if(c->getComponent<ColliderComponent>().tag == "wall") {
+					c->destroy();
+				}
+			}
+			map->~Map();
+			// Remove Tiles entities
+			
+			// Change map
+			map = new Map("house", 2, 8);
+			map->SetMap(MAP_INDOOR);
+			// Set player's position in the new map
+			mainPlayer->getComponent<TransformComponent>().setNewPosition(Vector2D(128, 128));
+			// Map objects creation
+			assets->CreateMapObject(Vector2D(64,96), MOBJ_PLANT, _scale);
+			assets->CreateMapObject(Vector2D(96,96), MOBJ_LIBRARY, _scale);
+			// Destroy all Triggers
+			t->destroy();
+			break;
 		}
 	}
 
