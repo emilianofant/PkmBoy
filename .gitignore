@@ -15,5 +15,9 @@ bin/*
 #ignore vscode configs
 .vscode
 
-resources/Char_anim.aseprite 
+resources/Char_anim.aseprite
 Roadmap.md
+
+*.tsx
+*.tmx
+*.csv

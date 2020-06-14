@@ -21,8 +21,8 @@ void AssetManager::CreatePlayer(Vector2D pos, std::string id)
 
 void AssetManager::CreateMapObject(Vector2D pos, spriteType_t spr, int sc)
 {
-  int sprXpos = spritesInfo[spr].xPos * 16; 
-  int sprYpos = spritesInfo[spr].yPos * 16; 
+  int sprXpos = spritesInfo[spr].xPos * 16;
+  int sprYpos = spritesInfo[spr].yPos * 16;
   int sprH = spritesInfo[spr].height;
   int sprW = spritesInfo[spr].width;
 
@@ -33,13 +33,33 @@ void AssetManager::CreateMapObject(Vector2D pos, spriteType_t spr, int sc)
 	mapObject.addGroup(Game::groupMapObjects);
 }
 
-void AssetManager::CreateTrigger(Vector2D pos, int sc)
+void AssetManager::CreateTrigger(triggerEnum_t tr, int sc)
 {
   auto& trigger(manager->addEntity());
-  trigger.addComponent<TransformComponent>(pos.x, pos.y, sc);
-	trigger.addComponent<ColliderComponent>("trigger", pos.x, pos.y, 16 * sc);
+  trigger.addComponent<TransformComponent>(
+    triggersDefinitions[tr].position.x,
+    triggersDefinitions[tr].position.y,
+    sc
+  );
+	trigger.addComponent<ColliderComponent>(
+    "trigger",
+    triggersDefinitions[tr].position.x,
+    triggersDefinitions[tr].position.y,
+    16 * sc
+  );
+  trigger.addComponent<TriggerComponent>(tr);
+
 	trigger.addGroup(Game::groupTriggers);
 }
+
+void AssetManager::CreateDialogBox(int sc)
+{
+  auto& dialogBox(manager->addEntity());
+  dialogBox.addComponent<GUI>(sc);
+  dialogBox.getComponent<GUI>().CreateDialogBox();
+	dialogBox.addGroup(Game::groupGui);
+}
+
 void AssetManager::AddTexture(std::string id, const char* path)
 {
   textures.emplace(id, TextureManager::LoadTexture(path));

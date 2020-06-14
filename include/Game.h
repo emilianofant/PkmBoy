@@ -5,10 +5,12 @@
 
 class AssetManager;
 class ColliderComponent;
+class Entity;
+class Map;
 
 /**
  * @brief Main class that defines the Game's Object.
- * 
+ *
  */
 class Game {
 public:
@@ -31,7 +33,7 @@ public:
 	static SDL_Event event;
 	/**
 	 * @brief Reference to an SDL Rectange that will be managing the
-	 * 				Player's camera states. 
+	 * 				Player's camera states.
 	 */
 	static SDL_Rect camera;
 	/**
@@ -39,6 +41,8 @@ public:
 	 */
 	static AssetManager* assets;
 
+  static Map* map;
+  static Entity* player;
 	/**
 	 * @brief Enum list with all the available Group labels
 	 * 				where the Entities can be organized and store with.
@@ -48,13 +52,14 @@ public:
 		groupMap, 			 // All Entities related to a Game's Map.
 		groupPlayers,		 // All Players type of Entities.
 		groupMapObjects, // All Map objects type of Entities.
-		groupColliders,	 // All Colliders actionable Entities.
+		groupColliders,	 // All Map's Colliders tiles.
 		groupTriggers,	 // All Triggers actionable Entities.
+		groupGui,	 			 // All GUI (Graphic User Interface) Entities.
 	};
 
 	/**
 	 * @brief Game's method to run when initiatiang.
-	 * 
+	 *
 	 * @param title 			Game's name;
 	 * @param xpos 				-x axis position for the Game's windows.
 	 * @param ypos 				-y axis position for the Game's windows.
@@ -67,12 +72,12 @@ public:
 
 	/**
 	 * @brief Get if the Game is running or not.
-	 * 
-	 * @return true 
-	 * @return false 
+	 *
+	 * @return true
+	 * @return false
 	 */
 	bool running() { return isRunning; }
-	
+
 	/**
 	 * @brief Function that will be managing Events through the game.
 	 */
@@ -110,7 +115,7 @@ private:
 	 */
 	int _windowHeightRes;
 	/**
-	 * @brief The local reference to a game Rendere 
+	 * @brief The local reference to a game Rendere
 	 * 				scaling factor.
 	 */
 	float _scale = 1;

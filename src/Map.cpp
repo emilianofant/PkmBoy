@@ -5,6 +5,10 @@
 
 extern Manager manager;
 
+Map::Map()
+{}
+
+// @todo: validate if this is still valid.
 Map::Map(std::string tID, int ms, int ts) : texID(tID), mapScale(ms), tileSize(ts)
 {
     scaledSize = ms * ts;
@@ -61,12 +65,55 @@ void Map::AddTile(int srcX, int srcY, int xpos, int ypos)
     tile.addGroup(Game::groupMap);
 }
 
-void Map::SetMap(mapData_t map) 
+void Map::SetMap(mapData_t mapId)
 {
-    std::string id = mapData[map].id;
-    std::string path = mapData[map].mapPath;
-    int sizeX= mapData[map].width;
-    int sizeY = mapData[map].height;
-    
-    Map::LoadMap(path, sizeX, sizeY);
+  std::string path = mapData[mapId].mapPath;
+  int sizeX= mapData[mapId].width;
+  int sizeY = mapData[mapId].height;
+
+  tileSize = mapData[mapId].tileSize;
+  mapScale = 2;
+
+  // @todo: refactor al scaling calcules
+  scaledSize = tileSize * mapScale;
+  texID = mapData[mapId].id;
+
+  LoadMap(path, sizeX, sizeY);
+
+  // Set player's position in the new map
+  Game::player->getComponent<TransformComponent>().setNewPosition(mapData[mapId].playerInitPosition);
+}
+
+void Map::ChangeMap(mapData_t mapId)
+{
+  Map::_ClearMapData();
+  Game::map->SetMap(mapId);
+  // @todo: Map objects creation. This could be defined in the Resources file
+  //        as a Vector per Map basis, so whenever a map is changed/loaded the
+  //        Vector could be walkable and create all the objects.
+
+  // Game::assets->CreateMapObject(Vector2D(64,96), MOBJ_PLANT, 2);
+  // Game::assets->CreateMapObject(Vector2D(96,96), MOBJ_LIBRARY, 2);
+}
+
+void Map::_ClearMapData()
+{
+  auto& tiles(manager.getGroup(Game::groupMap));
+  auto& players(manager.getGroup(Game::groupPlayers));
+  auto& colliders(manager.getGroup(Game::groupColliders));
+  auto& mapObjects(manager.getGroup(Game::groupMapObjects));
+  auto& triggers(manager.getGroup(Game::groupTriggers));
+
+  for (auto& ti : tiles) {
+  	ti->destroy();
+  }
+  // Remove colliders from previous Map.
+  for (auto& c : colliders) {
+  	if(c->getComponent<ColliderComponent>().tag == "wall") {
+  		c->destroy();
+  	}
+  }
+  for (auto& tr : triggers) {
+  	tr->destroy();
+  }
 }

@@ -10,7 +10,7 @@ class TileComponent : public Component
 {
 public:
     /**
-     * @brief Local reference to the Game's SDL Texture instance. 
+     * @brief Local reference to a SDL Texture instance. 
      */
     SDL_Texture* texture;
     /**
