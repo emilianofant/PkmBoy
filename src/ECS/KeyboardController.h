@@ -16,7 +16,7 @@ public:
     SpriteComponent *sprite;
 
     /**
-     * @brief Init function to set the reference to the Entity's
+     * @brief Init function to set the references to the Entity's
      *        Transform and Sprite Components.
      */
     void init() override
@@ -34,20 +34,20 @@ public:
         {
             switch (Game::event.key.keysym.sym)
             {
-                case SDLK_w:
+                case SDLK_UP:
                     transform->fixedMovement("DIR_UP");
                     sprite->Play("player_back_walk");
                     break;
-                case SDLK_a:
+                case SDLK_LEFT:
                     transform->fixedMovement("DIR_LEFT");
                     sprite->Play("player_side_walk");
                     break;
-                case SDLK_d:
+                case SDLK_RIGHT:
                     transform->fixedMovement("DIR_RIGHT");
                     sprite->spriteFlip = SDL_FLIP_HORIZONTAL;
                     sprite->Play("player_side_walk");
                     break;
-                case SDLK_s:
+                case SDLK_DOWN:
                     transform->fixedMovement("DIR_DOWN");
                     sprite->Play("player_front_walk");
                     break;
@@ -60,17 +60,17 @@ public:
         {
             switch (Game::event.key.keysym.sym)
             {
-                case SDLK_w:
+                case SDLK_UP:
                     sprite->Play("player_back_idle");
                     break;
-                case SDLK_a:
+                case SDLK_LEFT:
                     sprite->Play("player_side_idle");
                     sprite->spriteFlip = SDL_FLIP_NONE;
                     break;
-                case SDLK_d:
+                case SDLK_RIGHT:
                     sprite->Play("player_side_idle");
                     break;
-                case SDLK_s:
+                case SDLK_DOWN:
                     sprite->Play("player_front_idle");
                     break; 
                 case SDLK_ESCAPE:
