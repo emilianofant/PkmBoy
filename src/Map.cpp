@@ -99,7 +99,6 @@ void Map::ChangeMap(mapData_t mapId)
 void Map::_ClearMapData()
 {
   auto& tiles(manager.getGroup(Game::groupMap));
-  auto& players(manager.getGroup(Game::groupPlayers));
   auto& colliders(manager.getGroup(Game::groupColliders));
   auto& mapObjects(manager.getGroup(Game::groupMapObjects));
   auto& triggers(manager.getGroup(Game::groupTriggers));
@@ -107,13 +106,18 @@ void Map::_ClearMapData()
   for (auto& ti : tiles) {
   	ti->destroy();
   }
-  // Remove colliders from previous Map.
+
   for (auto& c : colliders) {
   	if(c->getComponent<ColliderComponent>().tag == "wall") {
   		c->destroy();
   	}
   }
+
   for (auto& tr : triggers) {
   	tr->destroy();
+  }
+
+  for (auto& o : mapObjects) {
+  	o->destroy();
   }
 }
