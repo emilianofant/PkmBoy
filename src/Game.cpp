@@ -83,11 +83,11 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
   player = players.at(0);
 
   // @todo: move SetMap to the constructor (?)
-  map->SetMap(MAP_OUTDOOR);
+  map->SetMap(MAP_INDOOR);
 
   // Set map's Triggers
-  assets->CreateTrigger(TRG_CHANGE_MAP, _scale);
-  assets->CreateTrigger(TRG_SHOW_DIALOGBOX, _scale);
+  assets->CreateTrigger(TRG_CHANGEMAP_TO_OUTDOOR, _scale);
+  // assets->CreateTrigger(TRG_SHOW_DIALOGBOX, _scale);
 
   // Create GUI assets
   assets->CreateDialogBox(_scale);
@@ -142,7 +142,7 @@ void Game::update()
   {
     SDL_Rect oCol = t->getComponent<ColliderComponent>().collider;
 
-    if (Collision::AABB(oCol, playersCol) && !isPlayerMoving)
+    if (Collision::AABB(oCol, playersCol))
     {
       // std::cout << "TRIGGER !!";
       t->getComponent<TriggerComponent>().doAction();

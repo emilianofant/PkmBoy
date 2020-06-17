@@ -79,8 +79,13 @@ typedef struct
    * @brief Map's height tiles.
    */
   int height;
-
+  /**
+   * @brief Map's tile size (in px).
+   */
   int tileSize;
+  /**
+   * @brief Player's initial position in the map.
+   */
   Vector2D playerInitPosition;
 
 } mapDataStruct_t;
@@ -94,9 +99,10 @@ extern mapDataStruct_t mapData[NONE];
  */
 typedef enum
 {
-  TRG_SHOW_DIALOGBOX,	 // Indoor house map.
-  TRG_CHANGE_MAP, // Outdoor house map..
-  TRIGGER_NONE
+  TRG_SHOW_DIALOGBOX,	      // Show GUI DialogBox.
+  TRG_CHANGEMAP_TO_INDOOR,  // Change to INDOOR house map.
+  TRG_CHANGEMAP_TO_OUTDOOR, // Change to OUTDOOR map.
+  TRG_NONE
 } triggerEnum_t;
 
 typedef void (*action_cb)();
@@ -108,13 +114,23 @@ typedef void (*action_cb)();
 typedef struct
 {
   /**
-   * @brief Map enum.
-    */
+   * @brief Trigger enum identifier.
+   */
   triggerEnum_t triggerEnum;
+  /**
+   * @brief Trigger position in the map.
+   */
   Vector2D position;
+  /**
+   * @brief Game texture scaling factor.
+   */
   int scale;
+  /**
+   * @brief Callback function to execute when the trigger
+   *        is activated.
+   */
   action_cb action;
 } triggersDefinition_t;
 
-extern triggersDefinition_t triggersDefinitions[NONE];
+extern triggersDefinition_t triggersDefinitions[TRG_NONE];
 

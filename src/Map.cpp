@@ -11,58 +11,58 @@ Map::Map()
 // @todo: validate if this is still valid.
 Map::Map(std::string tID, int ms, int ts) : texID(tID), mapScale(ms), tileSize(ts)
 {
-    scaledSize = ms * ts;
+  scaledSize = ms * ts;
 }
 
 Map::~Map() {}
 
 void Map::LoadMap(std::string path, int sizeX, int sizeY)
 {
-    char c;
-    std::fstream mapFile;
-    mapFile.open(path);
+  char c;
+  std::fstream mapFile;
+  mapFile.open(path);
 
-    int srcX, srcY;
+  int srcX, srcY;
 
-    for (int y = 0; y < sizeY; y++)
+  for (int y = 0; y < sizeY; y++)
+  {
+    for (int x = 0; x < sizeX; x++)
     {
-        for (int x = 0; x < sizeX; x++)
-        {
-            mapFile.get(c);
-            srcY = atoi(&c) * tileSize;
-            mapFile.get(c);
-            srcX = atoi(&c) * tileSize;
-            AddTile(srcX, srcY, x * scaledSize, y * scaledSize);
-            mapFile.ignore(); // Ignore commas from .map file
-        }
+      mapFile.get(c);
+      srcY = atoi(&c) * tileSize;
+      mapFile.get(c);
+      srcX = atoi(&c) * tileSize;
+      AddTile(srcX, srcY, x * scaledSize, y * scaledSize);
+      mapFile.ignore(); // Ignore commas from .map file
     }
+  }
 
-    mapFile.ignore();
+  mapFile.ignore();
 
-    for (int y = 0; y < sizeY; y++)
+  for (int y = 0; y < sizeY; y++)
+  {
+    for (int x = 0; x < sizeX; x++)
     {
-        for (int x = 0; x < sizeX; x++)
-        {
-            mapFile.get(c);
-            if (c == '1')
-            {
-                //collision
-                auto &tcol(manager.addEntity());
-                tcol.addComponent<ColliderComponent>("wall", x * scaledSize, y * scaledSize, scaledSize);
-                tcol.addGroup(Game::groupColliders);
-            }
-            mapFile.ignore();
-        }
+      mapFile.get(c);
+      if (c == '1')
+      {
+        //collision
+        auto &tcol(manager.addEntity());
+        tcol.addComponent<ColliderComponent>("wall", x * scaledSize, y * scaledSize, scaledSize);
+        tcol.addGroup(Game::groupColliders);
+      }
+      mapFile.ignore();
     }
+  }
 
-    mapFile.close();
+  mapFile.close();
 }
 
 void Map::AddTile(int srcX, int srcY, int xpos, int ypos)
 {
-    auto &tile(manager.addEntity());
-    tile.addComponent<TileComponent>(srcX, srcY, xpos, ypos, tileSize, mapScale, texID);
-    tile.addGroup(Game::groupMap);
+  auto &tile(manager.addEntity());
+  tile.addComponent<TileComponent>(srcX, srcY, xpos, ypos, tileSize, mapScale, texID);
+  tile.addGroup(Game::groupMap);
 }
 
 void Map::SetMap(mapData_t mapId)
@@ -86,14 +86,8 @@ void Map::SetMap(mapData_t mapId)
 
 void Map::ChangeMap(mapData_t mapId)
 {
-  Map::_ClearMapData();
-  Game::map->SetMap(mapId);
-  // @todo: Map objects creation. This could be defined in the Resources file
-  //        as a Vector per Map basis, so whenever a map is changed/loaded the
-  //        Vector could be walkable and create all the objects.
-
-  // Game::assets->CreateMapObject(Vector2D(64,96), MOBJ_PLANT, 2);
-  // Game::assets->CreateMapObject(Vector2D(96,96), MOBJ_LIBRARY, 2);
+  _ClearMapData();
+  SetMap(mapId);
 }
 
 void Map::_ClearMapData()
