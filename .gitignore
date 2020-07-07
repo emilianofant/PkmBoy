@@ -1,23 +1,4 @@
-# Ignore the build and lib dirs
-build
-lib/*
-
-# Ignore any executables
-bin/*
-
-# Ignore Mac specific files
-.DS_Store
-
-#ignore Krita files backup
-*.kra~
-*.png~
-
-#ignore vscode configs
-.vscode
-
-resources/Char_anim.aseprite
-Roadmap.md
-
-*.tsx
-*.tmx
-*.csv
+.vs/
+cmake/
+out/
+CMakeSettings.json

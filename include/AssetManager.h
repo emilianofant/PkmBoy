@@ -5,7 +5,7 @@
 #include "TextureManager.h"
 #include "Vector2D.h"
 #include "../src/ECS/ECS.h"
-#include "SDL2/SDL_ttf.h"
+#include "SDL_ttf.h"
 #include "Resources.h"
 
 /**
