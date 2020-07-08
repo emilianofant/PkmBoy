@@ -7,7 +7,7 @@ project(pkmnboy)
 # The Cmake find modules over win folder works finding SDL libraries
 # both for Windows and Linux.
 if (WIN32 OR UNIX)
-  set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/win/")
+  set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
   find_package(SDL2 REQUIRED)
   find_package(SDL2_image REQUIRED)
