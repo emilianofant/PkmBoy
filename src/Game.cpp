@@ -74,9 +74,9 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
   assets->AddTexture("gui_dialogBox", "./assets/gui/dialogBox.png");
   assets->AddTexture("backgrounds", "./assets/backgrounds/bkg_00.png");
   assets->AddTexture("house", "./assets/backgrounds/bkg_00.png");
-  assets->AddTexture("outdoor", "assets/map/outdoor.png");
+  assets->AddTexture("outdoor", "./assets/map/outdoor.png");
   assets->AddTexture("player", "./assets/sprites/char_01.png");
-  assets->AddTexture("map_objects", "assets/sprites/mobjs_00.png");
+  assets->AddTexture("map_objects", "./assets/sprites/mobjs_00.png");
 
   // Player creation
   assets->CreatePlayer(Vector2D(0, 0), "player");
