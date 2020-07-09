@@ -100,6 +100,7 @@ extern mapDataStruct_t mapData[NONE];
 typedef enum
 {
   TRG_SHOW_DIALOGBOX,	      // Show GUI DialogBox.
+  TRG_CLOSE_DIALOGBOX,      // Hide the GUI DialogBox
   TRG_CHANGEMAP_TO_INDOOR,  // Change to INDOOR house map.
   TRG_CHANGEMAP_TO_OUTDOOR, // Change to OUTDOOR map.
   TRG_NONE
@@ -134,3 +135,4 @@ typedef struct
 
 extern triggersDefinition_t triggersDefinitions[TRG_NONE];
 
+/* ******************************************* */

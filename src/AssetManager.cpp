@@ -54,9 +54,13 @@ void AssetManager::CreateTrigger(triggerEnum_t tr, int sc)
 
 void AssetManager::CreateDialogBox(int sc)
 {
+  SDL_Color black = { 15, 26, 15, 255 };
+
   auto& dialogBox(manager->addEntity());
   dialogBox.addComponent<GUI>(sc);
   dialogBox.getComponent<GUI>().CreateDialogBox();
+  // Text Label component
+  dialogBox.addComponent<GUILabel>(9, 220, "Gary, you can have one too!00000", "pkmn", black);
 	dialogBox.addGroup(Game::groupGui);
 }
 
@@ -68,4 +72,14 @@ void AssetManager::AddTexture(std::string id, const char* path)
 SDL_Texture* AssetManager::GetTexture(std::string id)
 {
   return textures[id];
+}
+
+void AssetManager::AddFont(std::string id, std::string path, int fontSize)
+{
+	fonts.emplace(id, TTF_OpenFont(path.c_str(), fontSize));
+}
+
+TTF_Font* AssetManager::GetFont(std::string id)
+{
+	return fonts[id];
 }

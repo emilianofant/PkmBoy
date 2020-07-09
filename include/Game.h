@@ -7,6 +7,7 @@ class AssetManager;
 class ColliderComponent;
 class Entity;
 class Map;
+class GUIManager;
 
 /**
  * @brief Main class that defines the Game's Object.
@@ -40,9 +41,16 @@ public:
 	 * @brief The local reference to the Game's Asset.
 	 */
 	static AssetManager* assets;
-
+  /**
+   * @brief Reference to the Game's map which will be rendered.
+   */
   static Map* map;
+  /**
+   * @brief
+   */
   static Entity* player;
+  // static Entity* guiLayer;
+  static GUIManager* guiManager;
 	/**
 	 * @brief Enum list with all the available Group labels
 	 * 				where the Entities can be organized and store with.
@@ -56,6 +64,18 @@ public:
 		groupTriggers,	 // All Triggers actionable Entities.
 		groupGui,	 			 // All GUI (Graphic User Interface) Entities.
 	};
+
+  /**
+   * @brief Enum of Control types.
+   */
+  typedef enum
+  {
+    CONTROL_PLAYER,	 // Control focus on Player.
+    CONTROL_GUI,     // Control focus on GUI assets.
+    CONTROL_NONE
+  } controlType_t;
+
+  static controlType_t _controlFocus;
 
 	/**
 	 * @brief Game's method to run when initiatiang.

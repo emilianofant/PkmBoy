@@ -78,6 +78,9 @@ public:
    */
   void AddTexture(std::string id, const char* path);
 
+  void AddFont(std::string id, std::string path, int fontSize);
+  TTF_Font* GetFont(std::string id);
+
   /**
    * @brief Get the Texture object from the store.
    *
@@ -96,4 +99,9 @@ private:
    * @brief Map to store Textures with its identifier.
    */
   std::map<std::string, SDL_Texture*> textures;
+  /**
+   * @brief Map storing fonts for the game.
+   */
+  std::map<std::string, TTF_Font*> fonts;
+
 };

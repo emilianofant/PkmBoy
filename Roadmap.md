@@ -15,7 +15,7 @@
 - Create basic sprites to have as a minimun executable game.
 * create a room DONE
 * create a character DONE
-* create some objects to collide with DONE 
+* create some objects to collide with DONE
 Nice to have
 * Create a "world" outside the room, in order to handle change from indoor to outdoor. - DONE
 
@@ -38,9 +38,9 @@ There will be a specific texture file for any type of GUI element (DialogBox, Me
 * Dialogue in map: talk to another character, interact with an object
 
 - Layers Definition (abstractions)
-* i.e. create Background layer that supports 4 colors, read a specific tile file 
+* i.e. create Background layer that supports 4 colors, read a specific tile file
 - Define Characters behaviours:
-* Statuses: Idle, Walk, etc - DONE 
+* Statuses: Idle, Walk, etc - DONE
 (SpriteComponent is in charge of that)
 - Define how .map files works
 An the moment, it has 2 "matrix"
@@ -77,5 +77,18 @@ Known bugs/issues:
 - Moonwalk: I think this is caused by the KEY event managing not only the movement transform action, but also coupling the Sprite animation
 to the key event, instead of the movement action itself. This means, that a possible solution could be to move all the Animation changes
 to the Transform Component, so when the "fixed movement" takes places, we play the Animation (that will long until the movement is done, not
-until you stop pressing a movement key)  
+until you stop pressing a movement key)
 
+
+/**********************************\
+
+- TODO: Refactorizar los Open y Close Dialogbox
+  para poder ser llamados desde donde sea.
+
+\**********************************/
+
+
+Dialog box:
+
+Dialog Open > Display text > No more text to show > Click A button > Close Dialog
+Dialog Open > Display text > { More text to show > Click A button > } No more text to show > Click A button > Close Dialog

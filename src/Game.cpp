@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "TextureManager.h"
 #include "Map.h"
+#include "GUIManager.h"
 #include "ECS/Components.h"
 #include "Vector2D.h"
 #include "Collision.h"
@@ -17,9 +18,13 @@ SDL_Event Game::event;
 SDL_Rect Game::camera = {0, 0, 160, 144};
 AssetManager* Game::assets = new AssetManager(&manager);
 Map* Game::map = new Map();
+GUIManager* Game::guiManager = new GUIManager();
 Entity* Game::player;
+// Entity* Game::guiLayer;
+Game::controlType_t Game::_controlFocus;
 
 bool Game::isRunning = false;
+bool processingTrigger = false;
 
 Game::Game()
 {}
@@ -27,6 +32,7 @@ Game::Game()
 Game::~Game()
 {}
 
+auto& label(manager.addEntity());
 auto& tiles(manager.getGroup(Game::groupMap));
 auto& players(manager.getGroup(Game::groupPlayers));
 auto& colliders(manager.getGroup(Game::groupColliders));
@@ -34,8 +40,11 @@ auto& mapObjects(manager.getGroup(Game::groupMapObjects));
 auto& triggers(manager.getGroup(Game::groupTriggers));
 auto& guiComponents(manager.getGroup(Game::groupGui));
 
+
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen, float scale = 1)
 {
+  Game::_controlFocus = CONTROL_PLAYER;
+
   _scale = scale;
   int flags = 0;
   _windowWidthRes = width*(int)_scale;
@@ -53,7 +62,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     window = SDL_CreateWindow(title, xpos, ypos, _windowWidthRes, _windowHeightRes, flags);
     if(window)
     {
-      std::cout << "window Created!" << _windowWidthRes << "x" << _windowHeightRes << std::endl;
+      std::cout << "Window Created" << _windowWidthRes << "x" << _windowHeightRes << std::endl;
     }
 
     renderer = SDL_CreateRenderer(window, -1, 0);
@@ -63,11 +72,18 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
       std::cout << "Render Created" << std::endl;
     }
+    // Font Library initialization
+    if (TTF_Init() == -1)
+    {
+      std::cout << "Error : SDL_TTF" << std::endl;
+    }
 
     isRunning = true;
   } else {
     isRunning = false;
   }
+
+  assets->AddFont("pkmn", "assets/fonts/_pkmn.ttf", 16);
 
   // Adding texture to the "Texture library"
   // @todo: Move all texture library related to specific method
@@ -80,17 +96,24 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
   // Player creation
   assets->CreatePlayer(Vector2D(0, 0), "player");
+  // @todo: set these entities an id, not by requesting a specific index.
   player = players.at(0);
-
+  player->getComponent<KeyboardController>().setActiveController();
   // @todo: move SetMap to the constructor (?)
   map->SetMap(MAP_INDOOR);
 
   // Set map's Triggers
   assets->CreateTrigger(TRG_CHANGEMAP_TO_OUTDOOR, _scale);
-  // assets->CreateTrigger(TRG_SHOW_DIALOGBOX, _scale);
+  assets->CreateTrigger(TRG_SHOW_DIALOGBOX, _scale);
 
   // Create GUI assets
-  assets->CreateDialogBox(_scale);
+  // assets->CreateDialogBox(_scale);
+  // @todo: set these entities an id, not by requesting a specific index.
+  // guiLayer = guiComponents.at(0);
+  // guiLayer->getComponent<GUI>().Show();
+  Game::_controlFocus = Game::CONTROL_PLAYER;
+
+	// label.addComponent<GUILabel>(9, 254, "have one too!00000", "pkmn", black);
 }
 
 void Game::handleEvents()
@@ -108,9 +131,6 @@ void Game::handleEvents()
 
 void Game::update()
 {
-  // @todo: set these entities an id, not by requesting a specific index.
-  Entity* dialogBox = guiComponents.at(0);
-
   SDL_Rect playersCol = player->getComponent<ColliderComponent>().collider;
   Vector2D playerPos = player->getComponent<TransformComponent>().position;
   bool isPlayerMoving = player->getComponent<TransformComponent>().isMoving();
@@ -142,8 +162,9 @@ void Game::update()
   {
     SDL_Rect oCol = t->getComponent<ColliderComponent>().collider;
 
-    if (Collision::AABB(oCol, playersCol))
+    if (Collision::AABB(oCol, playersCol) && !processingTrigger)
     {
+      processingTrigger = true;
       // std::cout << "TRIGGER !!";
       t->getComponent<TriggerComponent>().doAction();
     }
@@ -177,9 +198,13 @@ void Game::render()
     o->draw();
   }
 
-  for (auto& g : guiComponents)
-  {
-    g->draw();
+  // If is active, means that the GUI layer is displaying something,
+  // like a DialogBox, Menu or whatever.
+  if(guiManager->IsActive()) {
+    for (auto& g : guiComponents)
+    {
+      g->draw();
+    }
   }
 
   SDL_RenderPresent(renderer);
@@ -189,6 +214,7 @@ void Game::clean()
 {
   SDL_DestroyWindow(window);
   SDL_DestroyRenderer(renderer);
+  TTF_Quit();
   SDL_Quit();
   std::cout << "Game Cleared" << std::endl;
 }

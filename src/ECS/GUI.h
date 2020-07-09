@@ -19,20 +19,20 @@ public:
    */
   typedef enum
   {
-    GUI_DIALOG_BOX, 
+    GUI_DIALOG_BOX,
     GUI_MENU
   } guiComponentEnum_t;
 
   /**
    * @brief Construct a new GUI object
-   * 
+   *
    * @param sc  Texture scaling factor
    */
 	GUI(int sc)
 	{
     _scale = sc;
   }
-	
+
   /**
    * @brief Destroy the GUI object and its texture.
    */
@@ -43,7 +43,6 @@ public:
 
   /**
    * @brief Create a Dialog Box type object.
-   * 
    */
 	void CreateDialogBox()
 	{
@@ -101,17 +100,17 @@ private:
    */
   guiComponentEnum_t _guiType;
   /**
-     * @brief Local reference to a SDL Texture instance. 
+     * @brief Local reference to a SDL Texture instance.
      */
   SDL_Texture* _texture;
   /**
-   * @brief Local reference to the Component's SDL Rectangules 
-   *        to draw. 
+   * @brief Local reference to the Component's SDL Rectangules
+   *        to draw.
    */
   SDL_Rect _srcRect, _destRect;
   /**
-   * @brief Flag to determine if the element is Active or not, and 
-   *        draw/update it depending on that. 
+   * @brief Flag to determine if the element is Active or not, and
+   *        draw/update it depending on that.
    */
   bool _isActive;
 };

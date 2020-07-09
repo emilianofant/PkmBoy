@@ -1,4 +1,5 @@
 #include "Map.h"
+#include "GUIManager.h"
 #include "Resources.h"
 #include "../src/ECS/ECS.h"
 #include "ECS/Components.h"
@@ -6,7 +7,8 @@
 // @todo: move to global constant
 int sc = 2;
 
-void ShowDialogBox();
+void OpenDialogBox();
+void CloseDialogBox();
 void ChangeMap_Indoor();
 void ChangeMap_Outdoor();
 
@@ -22,7 +24,8 @@ mapDataStruct_t mapData[MAP_NONE] = {
 
 triggersDefinition_t triggersDefinitions[TRG_NONE] = {
   // MAP_OUTDOOR Triggers.
-  {TRG_SHOW_DIALOGBOX, Vector2D(288, 352), sc, ShowDialogBox},
+  {TRG_SHOW_DIALOGBOX, Vector2D(256, 224), sc, OpenDialogBox},
+  {TRG_CLOSE_DIALOGBOX, Vector2D(256, 224), sc, CloseDialogBox},
   {TRG_CHANGEMAP_TO_INDOOR, Vector2D(288, 288), sc, ChangeMap_Indoor},
   // MAP_INDOOR Triggers.
   {TRG_CHANGEMAP_TO_OUTDOOR, Vector2D(256,288), sc, ChangeMap_Outdoor}
@@ -50,7 +53,16 @@ void ChangeMap_Outdoor()
   Game::assets->CreateTrigger(TRG_CHANGEMAP_TO_INDOOR, sc);
 }
 
-void ShowDialogBox()
+void OpenDialogBox()
 {
-  // @todo: toggle the active flag
+  Game::guiManager->OpenDialogBox();
+  // Game::guiLayer->getComponent<GUI>().Show();
+  // Game::_controlFocus = Game::CONTROL_GUI;
+}
+
+void CloseDialogBox()
+{
+  Game::guiManager->CloseDialogBox();
+  // Game::guiLayer->destroy();
+  // Game::_controlFocus = Game::CONTROL_PLAYER;
 }

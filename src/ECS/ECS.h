@@ -31,11 +31,11 @@ template <typename T> inline ComponentID getComponentTypeID() noexcept
 
 /**
  * @brief Constant that defines the amount of maximum components that
- *        an entity can get. 
+ *        an entity can get.
  */
 constexpr std::size_t maxComponents = 32;
 /**
- * @brief Constant that defines the amount of maximum Groups 
+ * @brief Constant that defines the amount of maximum Groups
  */
 constexpr std::size_t maxGroups = 32;
 
@@ -79,12 +79,12 @@ private:
 	Manager& manager;
     /**
      * @brief Flag to determine if entity is active or not, in order
-     *        to be able to remove from the game. 
+     *        to be able to remove from the game.
      */
     bool active = true;
     /**
      * @brief Vector of all the Component that are part of a specific
-     *        entity. 
+     *        entity.
      */
     std::vector<std::unique_ptr<Component>> components;
 
@@ -96,7 +96,7 @@ public:
 	Entity(Manager& mManager) : manager(mManager) {}
 
     // Entity Loop over all components and call the updates
-    void update() 
+    void update()
     {
         for(auto& c : components) c-> update();
     }
@@ -107,18 +107,18 @@ public:
 
     /**
      * @brief Method to get the if the Entity is active or not.
-     * 
-     * @return true 
-     * @return false 
+     *
+     * @return true
+     * @return false
      */
     bool isActive() const { return active; }
-    
+
     /**
-     * @brief Function to set the active status on false and 
-     *        remove/clear the Entity. 
+     * @brief Function to set the active status on false and
+     *        remove/clear the Entity.
      */
     void destroy() { active = false; }
-    
+
 
     bool hasGroup(Group mGroup)
     {
@@ -168,12 +168,12 @@ public:
  *        all the Entities that are created, used and/or deleted
  *        through the game.
  */
-class Manager 
+class Manager
 {
 private:
     /**
-     * @brief Local reference for the Entities that are created  
-     *        through the Game. 
+     * @brief Local reference for the Entities that are created
+     *        through the Game.
      */
     std::vector<std::unique_ptr<Entity>> entities;
     /**
@@ -184,14 +184,14 @@ private:
 
 public:
     /**
-     * @brief Iterate each Entity and run its update function. 
+     * @brief Iterate each Entity and run its update function.
      */
-    void update() 
+    void update()
     {
         for (auto& e: entities) e->update();
     }
     /**
-     * @brief Iterate each Entity and run its draw function. 
+     * @brief Iterate each Entity and run its draw function.
      */
     void draw()
     {
@@ -200,8 +200,8 @@ public:
     /**
      * @brief Method to check within each Entity group, then through each
      *        Entity in order to evaluate its status, if is Active and/or
-     *        if it has group assigned, in order to remove it. 
-     * 
+     *        if it has group assigned, in order to remove it.
+     *
      */
     void refresh()
     {
@@ -225,9 +225,9 @@ public:
     }
     /**
      * @brief Method to add an Entity to a specific Entity Group.
-     * 
+     *
      * @param mEntity   Pointer reference to a specific Entity.
-     * @param mGroup    Reference to an Entity Group where the Entity 
+     * @param mGroup    Reference to an Entity Group where the Entity
      *                  is going to be added.
      */
     void AddToGroup(Entity* mEntity, Group mGroup)
@@ -236,10 +236,10 @@ public:
     }
     /**
      * @brief Get the Group object.
-     * 
+     *
      * @param mGroup Target Entity Group to be returned.
-     *  
-     * @return std::vector<Entity*>& 
+     *
+     * @return std::vector<Entity*>&
      */
     std::vector<Entity*>& getGroup(Group mGroup)
     {
@@ -247,7 +247,7 @@ public:
     }
     /**
      * @brief Method to add an Entity to the Entity vector.
-     * 
+     *
      * @return Entity& Return Entity's pointer reference.
      */
     Entity& addEntity()

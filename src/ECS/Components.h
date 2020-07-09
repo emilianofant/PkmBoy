@@ -7,3 +7,4 @@
 #include "TileComponent.h"
 #include "GUI.h"
 #include "TriggerComponent.h"
+#include "GUILabel.h"
