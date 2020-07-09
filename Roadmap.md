@@ -78,4 +78,3 @@ Known bugs/issues:
 to the key event, instead of the movement action itself. This means, that a possible solution could be to move all the Animation changes
 to the Transform Component, so when the "fixed movement" takes places, we play the Animation (that will long until the movement is done, not
 until you stop pressing a movement key)  
-

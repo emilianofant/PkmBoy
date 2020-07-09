@@ -1,5 +1,5 @@
 #pragma once
-#include "SDL2/SDL.h"
+#include "SDL.h"
 
 /**
  * @brief This component define the Tiles and its texture

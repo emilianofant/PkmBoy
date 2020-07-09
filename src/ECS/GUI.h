@@ -4,7 +4,7 @@
 #include "Game.h"
 #include "TextureManager.h"
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <string>
 
 /**

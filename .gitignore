@@ -1,5 +1,6 @@
 # Ignore the build and lib dirs
 build
+out/
 lib/*
 
 # Ignore any executables
@@ -16,8 +17,10 @@ bin/*
 .vscode
 
 resources/Char_anim.aseprite
-Roadmap.md
 
 *.tsx
 *.tmx
 *.csv
+
+.vs/
+CMakeSettings.json
