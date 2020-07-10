@@ -45,13 +45,30 @@ The Game is built using the [SDL2](https://www.libsdl.org/index.php) library, fo
 - [SDL2 Image](https://www.libsdl.org/projects/SDL_image/) 
 - [SDL_ttf 2](https://www.libsdl.org/projects/SDL_ttf/)
 
+#### Windows
+I've installed the SDL2 libraries using [vcpkg](https://github.com/microsoft/vcpkg)
+
+### MacOS
+I've installed the SDL2 librarys using [Brew](https://brew.sh/)
+
 ### Compile and run
-The application it's using a Make file to manage the compilation process.
-```
-~/{gamefolder}$ make 
+The application build process is made using [CMAKE](https://cmake.org/), which allows to have different output system targets:
+- Linux
+- macOS
+- Windows (x86 & x64)
 
-# once the make recipe is done...
-
-~/{gamefolder}$ make run 
+#### Linux
 ```
-The Make recipe, outputs a binary file: `runner` in the `/bin` folder. 
+cmake -S . -B out/build # This will compile the source code files
+cmake --build out/build # Link the source files
+```
+
+#### macOS
+```
+cmake -S . -B out/build # This will compile the source code files
+cmake --build out/build # Link the source files
+```
+
+#### Windows
+I've been using Visual Studio 2019 Community, that should detect the CMAKE configs. You could download both x86 and x64 SDL libraries (using vcpkg) and the set the Debug-x86 or Debug-x64 within VS2019. Then, you have to first create the CMAKE cache, set `main.cpp` as the project's start poing and finally run the app (which should finish the compilation process).
+You can debug the app using VS2019. 

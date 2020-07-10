@@ -1,5 +1,5 @@
 #pragma once
-#include "SDL2/SDL.h"
+#include "SDL.h"
 #include "Animation.h"
 #include "Game.h"
 #include <map>
