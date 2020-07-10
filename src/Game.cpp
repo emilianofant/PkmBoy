@@ -161,7 +161,6 @@ void Game::update()
       if (Collision::AABB(oCol, playersCol) && !processingTrigger && !isPlayerMoving)
       {
         processingTrigger = true;
-        // std::cout << "TRIGGER !!";
         t->getComponent<TriggerComponent>().doAction();
       } else {
         processingTrigger = false;

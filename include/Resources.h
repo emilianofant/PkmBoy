@@ -109,6 +109,16 @@ typedef enum
 typedef void (*action_cb)();
 
 /**
+ * @brief Types of Triggers.
+ */
+typedef enum
+{
+  TRG_TYPE_INMEDIATE, // Should run prior to player starts moving.
+  TRG_TYPE_CINEMATIC, // Should run after the player finish its movement.
+  TRG_TYPE_NONE
+} triggerTypeEnum_t;
+
+/**
  * @brief Struct that defines Triggers and its
  *        a specific map, with its texture and tile/map file.
  */
@@ -118,6 +128,10 @@ typedef struct
    * @brief Trigger enum identifier.
    */
   triggerEnum_t triggerEnum;
+  /**
+   * @brief  Trigger type.
+   */
+  triggerTypeEnum_t triggerType;
   /**
    * @brief Trigger position in the map.
    */

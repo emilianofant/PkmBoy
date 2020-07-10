@@ -78,16 +78,29 @@ Known bugs/issues:
 to the key event, instead of the movement action itself. This means, that a possible solution could be to move all the Animation changes
 to the Transform Component, so when the "fixed movement" takes places, we play the Animation (that will last until the movement is done, not until you stop pressing a movement key)
 
-
-/**********************************\
-
-- TODO: Refactorizar los Open y Close Dialogbox
-  para poder ser llamados desde donde sea.
-
-\**********************************/
-
-
 Dialog box:
 
 Dialog Open > Display text > No more text to show > Click A button > Close Dialog
 Dialog Open > Display text > { More text to show > Click A button > } No more text to show > Click A button > Close Dialog
+
+------------------
+
+Triggers:
+
+Types:
+- INMEDIATE:
+> Player starts from initial position
+> Moves towards a fixed position with trigger
+> Trigger executed
+. Examples: Change Map,
+
+- AFTER_MOVE:
+> Player starts from initial position
+> Moves towards a fixed position with trigger
+> Player finished its movement to destination position
+> Trigger executed
+. Examples: Cinematics, Trainer engaged,
+
+Some behaviours:
+- Handle state, like if a Triggers is being executed (so only 1 trigger at the time)
+- Removable: it deletes after its execution

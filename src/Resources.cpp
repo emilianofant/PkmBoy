@@ -24,11 +24,11 @@ mapDataStruct_t mapData[MAP_NONE] = {
 
 triggersDefinition_t triggersDefinitions[TRG_NONE] = {
   // MAP_OUTDOOR Triggers.
-  {TRG_SHOW_DIALOGBOX, Vector2D(256, 224), sc, OpenDialogBox},
-  {TRG_CLOSE_DIALOGBOX, Vector2D(256, 224), sc, CloseDialogBox},
-  {TRG_CHANGEMAP_TO_INDOOR, Vector2D(288, 288), sc, ChangeMap_Indoor},
+  {TRG_SHOW_DIALOGBOX, TRG_TYPE_CINEMATIC, Vector2D(256, 224), sc, OpenDialogBox},
+  {TRG_CLOSE_DIALOGBOX, TRG_TYPE_INMEDIATE, Vector2D(256, 224), sc, CloseDialogBox},
+  {TRG_CHANGEMAP_TO_INDOOR, TRG_TYPE_INMEDIATE, Vector2D(288, 288), sc, ChangeMap_Indoor},
   // MAP_INDOOR Triggers.
-  {TRG_CHANGEMAP_TO_OUTDOOR, Vector2D(256,288), sc, ChangeMap_Outdoor}
+  {TRG_CHANGEMAP_TO_OUTDOOR, TRG_TYPE_INMEDIATE, Vector2D(256,288), sc, ChangeMap_Outdoor}
 };
 
 // @todo: define callbacks in a specific Callbacks.cpp files
