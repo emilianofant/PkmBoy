@@ -63,6 +63,5 @@ void OpenDialogBox()
 void CloseDialogBox()
 {
   Game::guiManager->CloseDialogBox();
-  // Game::guiLayer->destroy();
-  // Game::_controlFocus = Game::CONTROL_PLAYER;
+  Game::processingTrigger = false;
 }

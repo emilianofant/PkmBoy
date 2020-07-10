@@ -84,9 +84,7 @@ public:
 
 	void draw() override
 	{
-    if(_isActive) {
-      TextureManager::Draw(_texture, _srcRect, _destRect, SDL_FLIP_NONE);
-    }
+    TextureManager::Draw(_texture, _srcRect, _destRect, SDL_FLIP_NONE);
 	}
 
 private:

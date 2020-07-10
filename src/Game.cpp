@@ -24,7 +24,7 @@ Entity* Game::player;
 Game::controlType_t Game::_controlFocus;
 
 bool Game::isRunning = false;
-bool processingTrigger = false;
+bool Game::processingTrigger = false;
 
 Game::Game()
 {}
@@ -108,12 +108,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
   // Create GUI assets
   // assets->CreateDialogBox(_scale);
-  // @todo: set these entities an id, not by requesting a specific index.
-  // guiLayer = guiComponents.at(0);
-  // guiLayer->getComponent<GUI>().Show();
   Game::_controlFocus = Game::CONTROL_PLAYER;
-
-	// label.addComponent<GUILabel>(9, 254, "have one too!00000", "pkmn", black);
 }
 
 void Game::handleEvents()
@@ -138,35 +133,39 @@ void Game::update()
   manager.refresh();
   manager.update();
 
-  for (auto& c : colliders)
-  {
-    SDL_Rect cCol = c->getComponent<ColliderComponent>().collider;
-
-    if (Collision::AABB(cCol, playersCol))
+  if(!guiManager->IsActive()) {
+    for (auto& c : colliders)
     {
-      player->getComponent<TransformComponent>().resetDestinationPosition();
+      SDL_Rect cCol = c->getComponent<ColliderComponent>().collider;
+
+      if (Collision::AABB(cCol, playersCol))
+      {
+        player->getComponent<TransformComponent>().resetDestinationPosition();
+      }
     }
-  }
 
-  for (auto& o : mapObjects)
-  {
-    SDL_Rect oCol = o->getComponent<ColliderComponent>().collider;
-
-    if (Collision::AABB(oCol, playersCol))
+    for (auto& o : mapObjects)
     {
-      player->getComponent<TransformComponent>().resetDestinationPosition();
+      SDL_Rect oCol = o->getComponent<ColliderComponent>().collider;
+
+      if (Collision::AABB(oCol, playersCol))
+      {
+        player->getComponent<TransformComponent>().resetDestinationPosition();
+      }
     }
-  }
 
-  for (auto& t : triggers)
-  {
-    SDL_Rect oCol = t->getComponent<ColliderComponent>().collider;
-
-    if (Collision::AABB(oCol, playersCol) && !processingTrigger)
+    for (auto& t : triggers)
     {
-      processingTrigger = true;
-      // std::cout << "TRIGGER !!";
-      t->getComponent<TriggerComponent>().doAction();
+      SDL_Rect oCol = t->getComponent<ColliderComponent>().collider;
+
+      if (Collision::AABB(oCol, playersCol) && !processingTrigger && !isPlayerMoving)
+      {
+        processingTrigger = true;
+        // std::cout << "TRIGGER !!";
+        t->getComponent<TriggerComponent>().doAction();
+      } else {
+        processingTrigger = false;
+      }
     }
   }
 

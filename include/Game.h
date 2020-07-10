@@ -47,11 +47,8 @@ public:
    * @brief Reference to the Game's map which will be rendered.
    */
   static Map* map;
-  /**
-   * @brief
-   */
+
   static Entity* player;
-  // static Entity* guiLayer;
   static GUIManager* guiManager;
 	/**
 	 * @brief Enum list with all the available Group labels
@@ -78,7 +75,7 @@ public:
   } controlType_t;
 
   static controlType_t _controlFocus;
-
+  static bool processingTrigger;
 	/**
 	 * @brief Game's method to run when initiatiang.
 	 *
