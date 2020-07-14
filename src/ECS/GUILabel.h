@@ -4,7 +4,7 @@
 #include "AssetManager.h"
 #include "Game.h"
 
-#include <SDL.h>
+#include "SDL.h"
 #include <SDL_ttf.h>
 
 class GUILabel : public Component
