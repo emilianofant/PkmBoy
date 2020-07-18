@@ -54,13 +54,14 @@ void AssetManager::CreateTrigger(triggerEnum_t tr, int sc)
 
 void AssetManager::CreateDialogBox(int sc)
 {
+  int _scale = 2;
   SDL_Color black = { 15, 26, 15, 255 };
 
   auto& dialogBox(manager->addEntity());
   dialogBox.addComponent<GUI>(sc);
   dialogBox.getComponent<GUI>().CreateDialogBox();
   // Text Label component
-  dialogBox.addComponent<GUILabel>(9, 220, "Gary, you can have one too!00000", "pkmn", black);
+  dialogBox.addComponent<GUILabel>(8 * _scale, 112 * _scale, "Gary, you can have\n\none too!", "pkmn", black);
 	dialogBox.addGroup(Game::groupGui);
 }
 
