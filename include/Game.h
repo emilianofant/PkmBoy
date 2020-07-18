@@ -119,6 +119,8 @@ public:
 	 */
 	void clean();
 
+  static void saveScreenshot();
+
 
 private:
 	/**

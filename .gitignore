@@ -21,6 +21,7 @@ resources/
 *.tmx
 *.csv
 CMakeSettings.json
+screenshot*
 
 # Ignore Visual Studio folders
 .vs/

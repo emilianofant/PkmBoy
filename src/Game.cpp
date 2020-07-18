@@ -62,7 +62,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     window = SDL_CreateWindow(title, xpos, ypos, _windowWidthRes, _windowHeightRes, flags);
     if(window)
     {
-      std::cout << "Window Created" << _windowWidthRes << "x" << _windowHeightRes << std::endl;
+      std::cout << "Window Created: " << _windowWidthRes << "x" << _windowHeightRes << std::endl;
     }
 
     renderer = SDL_CreateRenderer(window, -1, 0);
@@ -162,8 +162,6 @@ void Game::update()
       {
         processingTrigger = true;
         t->getComponent<TriggerComponent>().doAction();
-      } else {
-        processingTrigger = false;
       }
     }
   }
@@ -215,4 +213,17 @@ void Game::clean()
   TTF_Quit();
   SDL_Quit();
   std::cout << "Game Cleared" << std::endl;
+}
+
+// This could be in an external class/helper.
+void Game::saveScreenshot()
+{
+  int w, h;
+  auto whatever =  SDL_GetRendererOutputSize(renderer, &w, &h);
+
+  SDL_Surface *sshot = SDL_CreateRGBSurface(0, w , h, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
+  SDL_RenderReadPixels(renderer, NULL, SDL_PIXELFORMAT_ARGB8888, sshot->pixels, sshot->pitch);
+  
+  IMG_SavePNG(sshot, "screenshot.png");
+  SDL_FreeSurface(sshot);
 }

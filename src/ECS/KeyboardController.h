@@ -118,5 +118,17 @@ public:
           break;
       }
     }
+    
+    if(Game::event.type == SDL_KEYUP)
+    {
+      switch (Game::event.key.keysym.sym)
+      {
+        case SDLK_F12:
+          Game::saveScreenshot();
+          break;
+        default:
+          break;
+      }
+    }
   }
 };

@@ -56,12 +56,9 @@ void ChangeMap_Outdoor()
 void OpenDialogBox()
 {
   Game::guiManager->OpenDialogBox();
-  // Game::guiLayer->getComponent<GUI>().Show();
-  // Game::_controlFocus = Game::CONTROL_GUI;
 }
 
 void CloseDialogBox()
 {
   Game::guiManager->CloseDialogBox();
-  Game::processingTrigger = false;
 }

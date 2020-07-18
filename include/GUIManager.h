@@ -14,8 +14,6 @@ public:
   void SetActive();
   void SetInactive();
   bool IsActive();
-  void SetGUIEntity(Entity* e);
   void OpenDialogBox();
   void CloseDialogBox();
-  void drawGui();
 };

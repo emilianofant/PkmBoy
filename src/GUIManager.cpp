@@ -24,12 +24,6 @@ bool GUIManager::IsActive()
   return _isActive;
 }
 
-// @todo: is not used
-void GUIManager::SetGUIEntity(Entity* e)
-{
-  _guiLayer = e;
-}
-
 void GUIManager::OpenDialogBox()
 {
   if(!IsActive()) {
@@ -45,10 +39,5 @@ void GUIManager::CloseDialogBox()
   // _guiLayer->destroy();
   SetInactive();
   Game::_controlFocus = Game::CONTROL_PLAYER;
-}
-
-// @todo: is not used
-void GUIManager::drawGui()
-{
-  _guiLayer->draw();
+  Game::processingTrigger = false;
 }
